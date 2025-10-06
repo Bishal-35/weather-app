@@ -56,5 +56,8 @@ node app.js or nodemon app.js
 - `WEATHER_API_KEY` - Your OpenWeatherMap API key
 
 ## Screenshots
+<img width="1832" height="928" alt="Screenshot 2025-10-06 155341" src="https://github.com/user-attachments/assets/ae059e7a-83ff-41d2-96b8-0efcc40aa601" />
 
-Add your application screenshots here.
+<img width="555" height="670" alt="Screenshot 2025-10-06 155430" src="https://github.com/user-attachments/assets/b14f5022-e699-418b-aae1-d4bd406c85b4" />
+
+
