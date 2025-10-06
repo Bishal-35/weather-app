@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-card">
+      <div class="search-section">
+        <form id="weather-form" action="/weather" method="POST">
+          <div class="input-group">
+            <input
+              type="text"
+              id="city-input"
+              name="city"
+              placeholder="Enter city name..."
+              required
+            />
+            <div class="button-group">
+              <button type="submit">
+                <i class="fas fa-cloud-sun"></i> Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Display current weather -->
+      <% if (weather) { %>
+      <div class="weather-header">
+        <span class="weather-icon">
+          <i class="fas fa-<%= getWeatherIcon(weather.condition) %>"></i>
+        </span>
+        <div class="weather-info">
+          <div class="weather-details">
+            <span class="weather-temp"><%= weather.temp %></span> &deg;C
+            <span class="weather-cond" style="margin-left: 10px">
+              <%= weather.condition %>
+            </span>
+            <span class="weather-humidity" style="margin-left: 10px"
+              ><i class="fas fa-tint"></i> <%= weather.humidity %>%</span
+            >
+          </div>
+          <div class="location"><%= weather.city %></div>
+          <div class="time">
+            <script>
+              document.write(new Date().toLocaleString());
+            </script>
+          </div>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- Display 5-day forecast -->
+      <% if (forecast && forecast.length) { %>
+      <div class="forecast-section">
+        <h2>5-Day Forecast for <%= city %></h2>
+        <div class="forecast-cards">
+          <% forecast.forEach(function(day, idx) { %>
+          <div class="day-card<%= idx === 0 ? ' active' : '' %>">
+            <div class="day-icon">
+              <i class="fas fa-<%= day.icon %>"></i>
+            </div>
+            <div>
+              <strong
+                ><%= new Date(day.date).toLocaleDateString(undefined,
+                {weekday:'short'}) %></strong
+              >
+            </div>
+            <div class="day-temp"><%= day.temp %>&deg;C</div>
+            <div class="condition"><%= day.condition %></div>
+            <div class="humidity">
+              <i class="fas fa-tint"></i> <%= day.humidity %>%
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <% } %>
+
+      <!-- Display error message -->
+      <% if (error) { %>
+      <div class="error-message"><%= error %></div>
+      <% } %>
+    </div>
+
+    <script>
+      window.onload = function () {
+        const lastCity = localStorage.getItem("lastCity");
+        if (lastCity) {
+          document.getElementById("city-input").value = lastCity;
+        }
+      };
+      document.getElementById("weather-form").onsubmit = function () {
+        localStorage.setItem(
+          "lastCity",
+          document.getElementById("city-input").value
+        );
+      };
+    </script>
+  </body>
+</html>
